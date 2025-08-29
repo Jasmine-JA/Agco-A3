@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">AgcoIPT</string>
+    <string name="headline_text">Emerging\ntech trends in IT</string>
+    <string name="sub_text">Discover the future of innovation\nand IT solutions.</string>
+    <string name="sign_in_button_desc">Sign in button</string>
+    <string name="sign_in_text">Sign in</string>
+    <string name="sign_up_text">Sign up</string>
+    <string name="back">Back</string>
+</resources>
+
