@@ -57,7 +57,7 @@ public class SignupActivity extends AppCompatActivity {
         backArrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish(); // Go back to previous activity (MainActivity)
+                finish();
             }
         });
 
