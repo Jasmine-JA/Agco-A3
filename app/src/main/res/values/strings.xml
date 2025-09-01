@@ -6,5 +6,22 @@
     <string name="sign_in_text">Sign in</string>
     <string name="sign_up_text">Sign up</string>
     <string name="back">Back</string>
+    <string name="google">Google</string>
+    <string name="welcome_back">Welcome Back</string>
+    <string name="sign_in_subtitle">Sign in to continue to your account</string>
+    <string name="email">Email:</string>
+    <string name="email_hint">example@gmail.com</string>
+    <string name="password">Password:</string>
+    <string name="password_hint">••••••••••••••••••••••</string>
+    <string name="toggle_password_visibility">Toggle password visibility</string>
+    <string name="remember_me">Remember me</string>
+    <string name="forgot_password">Forgot password?</string>
+    <string name="login">LOGIN</string>
+    <string name="don_t_have_account">Don\'t have an account?</string>
+    <string name="signup">Signup</string>
+    <string name="facebook">Facebook</string>
+    <string name="continue_with">continue with</string>
+    <string name="full_name_hint">Enter your full name</string>
+    <string name="toggle_confirm_password_visibility">Toggle confirm password visibility</string>
 </resources>
 

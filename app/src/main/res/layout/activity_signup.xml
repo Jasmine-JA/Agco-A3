@@ -79,11 +79,12 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="27dp"
         android:background="@drawable/email_textbox_background"
-        android:hint=""
+        android:hint="@string/full_name_hint"
         android:inputType="textPersonName"
+        android:autofillHints="name"
         android:padding="16dp"
         android:textColor="#FFFFFF"
-        android:textColorHint="#80FFFFFF"
+        android:textColorHint="#CCCCCC"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -158,15 +159,19 @@
 
         <ImageView
             android:id="@+id/togglePasswordVisibility"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:layout_marginEnd="16dp"
+            android:layout_marginEnd="4dp"
             android:clickable="true"
             android:focusable="true"
+            android:padding="12dp"
             android:src="@drawable/ic_eye_hidden"
-            android:contentDescription="Toggle password visibility" />
+            android:contentDescription="@string/toggle_password_visibility"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            app:tint="#CCCCCC"
+            android:importantForAccessibility="yes" />
 
     </RelativeLayout>
 
@@ -209,15 +214,19 @@
 
         <ImageView
             android:id="@+id/toggleConfirmPasswordVisibility"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:layout_marginEnd="16dp"
+            android:layout_marginEnd="4dp"
             android:clickable="true"
             android:focusable="true"
+            android:padding="12dp"
             android:src="@drawable/ic_eye_hidden"
-            android:contentDescription="Toggle confirm password visibility" />
+            android:contentDescription="@string/toggle_confirm_password_visibility"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            app:tint="#CCCCCC"
+            android:importantForAccessibility="yes" />
 
     </RelativeLayout>
 
@@ -249,20 +258,25 @@
         android:textColor="#CCCCCC"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.407"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/signupButton" />
 
+
     <TextView
         android:id="@+id/loginLink"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="45dp"
+        android:layout_height="22dp"
         android:layout_marginStart="4dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center"
+        android:minWidth="48dp"
+        android:minHeight="48dp"
         android:text="Login"
         android:textColor="#0B82D9"
         android:textSize="16sp"
         android:textStyle="bold"
-        android:clickable="true"
-        android:focusable="true"
         app:layout_constraintStart_toEndOf="@+id/loginPrompt"
         app:layout_constraintTop_toTopOf="@+id/loginPrompt" />
 
