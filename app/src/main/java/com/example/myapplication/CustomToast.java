@@ -10,23 +10,17 @@ import android.widget.Toast;
 public class CustomToast {
 
     public static void showCustomToast(Context context, String message) {
-        // Create custom toast
         Toast toast = new Toast(context);
-
-        // Inflate custom layout
         LayoutInflater inflater = LayoutInflater.from(context);
         View layout = inflater.inflate(R.layout.custom_toast_layout, null);
 
-        // Set the message
         TextView text = layout.findViewById(R.id.toast_text);
         text.setText(message);
 
-        // Configure toast
         toast.setView(layout);
-        toast.setDuration(Toast.LENGTH_LONG); // Show for about 3.5 seconds
+        toast.setDuration(Toast.LENGTH_LONG);
         toast.setGravity(Gravity.CENTER, 0, 0); // Center on screen
 
-        // Show the toast
         toast.show();
     }
 

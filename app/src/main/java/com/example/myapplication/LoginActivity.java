@@ -148,24 +148,20 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
-        // If all validations pass
         showCustomToast("Login successful!");
     }
 
     private void showCustomToast(String message) {
-        // Inflate the custom toast layout
         LayoutInflater inflater = getLayoutInflater();
         View layout = inflater.inflate(R.layout.custom_toast_layout,
                 (ViewGroup) findViewById(R.id.toast_layout_root));
 
-        // Set the custom message
         TextView toastText = layout.findViewById(R.id.toast_text);
         toastText.setText(message);
 
-        // Create and configure the toast
         Toast customToast = new Toast(getApplicationContext());
-        customToast.setGravity(Gravity.CENTER, 0, 0); // Center on screen
-        customToast.setDuration(Toast.LENGTH_LONG); // Show for a longer duration
+        customToast.setGravity(Gravity.CENTER, 0, 0);
+        customToast.setDuration(Toast.LENGTH_LONG);
         customToast.setView(layout);
         customToast.show();
     }

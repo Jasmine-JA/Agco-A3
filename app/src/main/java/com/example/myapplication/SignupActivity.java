@@ -130,13 +130,11 @@ public class SignupActivity extends AppCompatActivity {
         String password = editTextPassword.getText().toString().trim();
         String confirmPassword = editTextConfirmPassword.getText().toString().trim();
 
-        // Clear any previous errors
         editTextFullName.setError(null);
         editTextEmail.setError(null);
         editTextPassword.setError(null);
         editTextConfirmPassword.setError(null);
 
-        // Check if any field is empty first
         if (fullName.isEmpty() || email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
             showCustomToast("Please fill in all fields");
             if (fullName.isEmpty()) {
@@ -151,38 +149,32 @@ public class SignupActivity extends AppCompatActivity {
             return;
         }
 
-        // Validate full name length
         if (fullName.length() < 2) {
             showCustomToast("Full name must be at least 2 characters");
             editTextFullName.requestFocus();
             return;
         }
 
-        // Validate email format
         if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             showCustomToast("Please enter a valid email address");
             editTextEmail.requestFocus();
             return;
         }
 
-        // Validate password length
         if (password.length() < 6) {
             showCustomToast("Password must be at least 6 characters");
             editTextPassword.requestFocus();
             return;
         }
 
-        // Check if passwords match
         if (!password.equals(confirmPassword)) {
             showCustomToast("Passwords do not match");
             editTextConfirmPassword.requestFocus();
             return;
         }
 
-        // If all validations pass
         showCustomToast("Account created successfully!");
 
-        // Navigate to login after a short delay to allow toast to show
         new android.os.Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -190,23 +182,20 @@ public class SignupActivity extends AppCompatActivity {
                 startActivity(intent);
                 finish();
             }
-        }, 1500); // 1.5 second delay
+        }, 1500);
     }
 
     private void showCustomToast(String message) {
-        // Inflate the custom toast layout
         LayoutInflater inflater = getLayoutInflater();
         View layout = inflater.inflate(R.layout.custom_toast_layout,
                 (ViewGroup) findViewById(R.id.toast_layout_root));
 
-        // Set the custom message
         TextView toastText = layout.findViewById(R.id.toast_text);
         toastText.setText(message);
 
-        // Create and configure the toast
         Toast customToast = new Toast(getApplicationContext());
-        customToast.setGravity(Gravity.CENTER, 0, 0); // Center on screen
-        customToast.setDuration(Toast.LENGTH_LONG); // Show for a longer duration
+        customToast.setGravity(Gravity.CENTER, 0, 0);
+        customToast.setDuration(Toast.LENGTH_LONG);
         customToast.setView(layout);
         customToast.show();
     }
