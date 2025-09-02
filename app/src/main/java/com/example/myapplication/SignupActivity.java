@@ -3,7 +3,10 @@ package com.example.myapplication;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -35,7 +38,6 @@ public class SignupActivity extends AppCompatActivity {
         setContentView(R.layout.activity_signup);
 
         initViews();
-
         setClickListeners();
     }
 
@@ -110,14 +112,14 @@ public class SignupActivity extends AppCompatActivity {
         googleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(SignupActivity.this, "Google signup clicked", Toast.LENGTH_SHORT).show();
+                showCustomToast("Google signup clicked");
             }
         });
 
         facebookButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(SignupActivity.this, "Facebook signup clicked", Toast.LENGTH_SHORT).show();
+                showCustomToast("Facebook signup clicked");
             }
         });
     }
@@ -128,58 +130,84 @@ public class SignupActivity extends AppCompatActivity {
         String password = editTextPassword.getText().toString().trim();
         String confirmPassword = editTextConfirmPassword.getText().toString().trim();
 
-        if (fullName.isEmpty()) {
-            editTextFullName.setError("Full name is required");
-            editTextFullName.requestFocus();
+        // Clear any previous errors
+        editTextFullName.setError(null);
+        editTextEmail.setError(null);
+        editTextPassword.setError(null);
+        editTextConfirmPassword.setError(null);
+
+        // Check if any field is empty first
+        if (fullName.isEmpty() || email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
+            showCustomToast("Please fill in all fields");
+            if (fullName.isEmpty()) {
+                editTextFullName.requestFocus();
+            } else if (email.isEmpty()) {
+                editTextEmail.requestFocus();
+            } else if (password.isEmpty()) {
+                editTextPassword.requestFocus();
+            } else {
+                editTextConfirmPassword.requestFocus();
+            }
             return;
         }
 
+        // Validate full name length
         if (fullName.length() < 2) {
-            editTextFullName.setError("Full name must be at least 2 characters");
+            showCustomToast("Full name must be at least 2 characters");
             editTextFullName.requestFocus();
             return;
         }
 
-        if (email.isEmpty()) {
-            editTextEmail.setError("Email is required");
-            editTextEmail.requestFocus();
-            return;
-        }
-
+        // Validate email format
         if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            editTextEmail.setError("Please enter a valid email");
+            showCustomToast("Please enter a valid email address");
             editTextEmail.requestFocus();
             return;
         }
 
-        if (password.isEmpty()) {
-            editTextPassword.setError("Password is required");
-            editTextPassword.requestFocus();
-            return;
-        }
-
+        // Validate password length
         if (password.length() < 6) {
-            editTextPassword.setError("Password must be at least 6 characters");
+            showCustomToast("Password must be at least 6 characters");
             editTextPassword.requestFocus();
             return;
         }
 
-        if (confirmPassword.isEmpty()) {
-            editTextConfirmPassword.setError("Confirm password is required");
-            editTextConfirmPassword.requestFocus();
-            return;
-        }
-
+        // Check if passwords match
         if (!password.equals(confirmPassword)) {
-            editTextConfirmPassword.setError("Passwords do not match");
+            showCustomToast("Passwords do not match");
             editTextConfirmPassword.requestFocus();
             return;
         }
 
-        Toast.makeText(this, "Account created successfully!", Toast.LENGTH_SHORT).show();
+        // If all validations pass
+        showCustomToast("Account created successfully!");
 
-        Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
-        startActivity(intent);
-        finish();
+        // Navigate to login after a short delay to allow toast to show
+        new android.os.Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        }, 1500); // 1.5 second delay
+    }
+
+    private void showCustomToast(String message) {
+        // Inflate the custom toast layout
+        LayoutInflater inflater = getLayoutInflater();
+        View layout = inflater.inflate(R.layout.custom_toast_layout,
+                (ViewGroup) findViewById(R.id.toast_layout_root));
+
+        // Set the custom message
+        TextView toastText = layout.findViewById(R.id.toast_text);
+        toastText.setText(message);
+
+        // Create and configure the toast
+        Toast customToast = new Toast(getApplicationContext());
+        customToast.setGravity(Gravity.CENTER, 0, 0); // Center on screen
+        customToast.setDuration(Toast.LENGTH_LONG); // Show for a longer duration
+        customToast.setView(layout);
+        customToast.show();
     }
 }

@@ -3,7 +3,10 @@ package com.example.myapplication;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -34,7 +37,6 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         initViews();
-
         setClickListeners();
     }
 
@@ -77,7 +79,7 @@ public class LoginActivity extends AppCompatActivity {
         forgotPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(LoginActivity.this, "Forgot password clicked", Toast.LENGTH_SHORT).show();
+                showCustomToast("Forgot password clicked");
             }
         });
 
@@ -100,14 +102,14 @@ public class LoginActivity extends AppCompatActivity {
         googleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(LoginActivity.this, "Google login clicked", Toast.LENGTH_SHORT).show();
+                showCustomToast("Google login clicked");
             }
         });
 
         facebookButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(LoginActivity.this, "Facebook login clicked", Toast.LENGTH_SHORT).show();
+                showCustomToast("Facebook login clicked");
             }
         });
     }
@@ -117,31 +119,54 @@ public class LoginActivity extends AppCompatActivity {
         String password = editTextPassword.getText().toString().trim();
         boolean rememberMe = rememberMeCheckBox.isChecked();
 
-        if (email.isEmpty()) {
-            editTextEmail.setError("Email is required");
-            editTextEmail.requestFocus();
+        // Clear any previous errors
+        editTextEmail.setError(null);
+        editTextPassword.setError(null);
+
+        // Check if any field is empty first
+        if (email.isEmpty() || password.isEmpty()) {
+            showCustomToast("Please fill in all fields");
+            if (email.isEmpty()) {
+                editTextEmail.requestFocus();
+            } else {
+                editTextPassword.requestFocus();
+            }
             return;
         }
 
+        // Validate email format
         if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            editTextEmail.setError("Please enter a valid email");
+            showCustomToast("Please enter a valid email address");
             editTextEmail.requestFocus();
             return;
         }
 
-        if (password.isEmpty()) {
-            editTextPassword.setError("Password is required");
-            editTextPassword.requestFocus();
-            return;
-        }
-
+        // Validate password length
         if (password.length() < 6) {
-            editTextPassword.setError("Password must be at least 6 characters");
+            showCustomToast("Password must be at least 6 characters");
             editTextPassword.requestFocus();
             return;
         }
 
-        Toast.makeText(this, "Login successful!", Toast.LENGTH_SHORT).show();
+        // If all validations pass
+        showCustomToast("Login successful!");
+    }
 
+    private void showCustomToast(String message) {
+        // Inflate the custom toast layout
+        LayoutInflater inflater = getLayoutInflater();
+        View layout = inflater.inflate(R.layout.custom_toast_layout,
+                (ViewGroup) findViewById(R.id.toast_layout_root));
+
+        // Set the custom message
+        TextView toastText = layout.findViewById(R.id.toast_text);
+        toastText.setText(message);
+
+        // Create and configure the toast
+        Toast customToast = new Toast(getApplicationContext());
+        customToast.setGravity(Gravity.CENTER, 0, 0); // Center on screen
+        customToast.setDuration(Toast.LENGTH_LONG); // Show for a longer duration
+        customToast.setView(layout);
+        customToast.show();
     }
 }
